@@ -45,13 +45,15 @@ class SearchViewController: UIViewController {
     private func getData(productName: String) {
         self.viewModel?.searchProducts(name: productName)
         self.viewModel?.searchViewState.value = .loading
-    }
+    } 
     
     private func loading() {
         let nib = UINib(nibName: .searchloadingView, bundle: nil)
         if let loadingView = nib.instantiate(withOwner: self, options: nil).first as? UIView {
+        
              self.tableResults.backgroundView = loadingView
         }
+    
     }
     
     private func errorState() {
@@ -86,7 +88,8 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel?.searchResults.count ?? 0
+        let numberOfRows = self.viewModel?.searchResults.count ?? 0
+        return numberOfRows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

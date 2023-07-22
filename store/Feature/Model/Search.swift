@@ -51,7 +51,7 @@ struct Search: Decodable {
     
     // MARK: - Private Enums
     private enum CodingKeys: String, CodingKey {
-        case siteId =  "site_id"
+        case siteId = "site_id"
         case query = "query"
         case paging = "paging"
         case results = "results"

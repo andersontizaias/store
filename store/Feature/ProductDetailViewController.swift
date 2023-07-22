@@ -19,12 +19,14 @@ class ProductDetailViewController: UIViewController {
     @IBOutlet private weak var titleProduct: UILabel!
     @IBOutlet private weak var decriptionProduct: UILabel!
     @IBOutlet private weak var errorView: UIView!
-    private  var shimmerView: FBShimmeringView?
+  
     var product: Product?
+    var navigationBar: UINavigationBar!
     
     // MARK: - Public Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         initializeViewModel()
         getData()
     }
@@ -52,13 +54,37 @@ class ProductDetailViewController: UIViewController {
     
     private func setupShimmer() {
         self.loadingView.isHidden = false
-        self.shimmerView = FBShimmeringView(frame: self.view.bounds)
-        if let shimmer = self.shimmerView {
-            self.view.addSubview(shimmer)
-            let transitionView = UIView(frame: self.view.bounds)
-            transitionView.backgroundColor = UIColor.white
-            shimmer.contentView = transitionView
-            shimmer.isShimmering = true
+        self.loadingView.startShimmering()
+    }
+    
+    private func setupNavigationBar() {
+        navigationBar = UINavigationBar(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height, width: view.frame.width, height: 44))
+        
+        navigationBar.barTintColor = .yellow
+        navigationBar.isTranslucent = false
+        
+        let navigationItem = UINavigationItem()
+        navigationItem.title = "Detalhes do Produto"
+        navigationBar.items = [navigationItem]
+        
+        self.view.addSubview(navigationBar)
+        
+        if #available(iOS 13.0, *) {
+            let statusBar = UIView()
+            statusBar.backgroundColor = .yellow
+            if let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first {
+                window.addSubview(statusBar)
+                statusBar.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    statusBar.heightAnchor.constraint(equalToConstant: window.safeAreaInsets.top),
+                    statusBar.topAnchor.constraint(equalTo: window.topAnchor),
+                    statusBar.leftAnchor.constraint(equalTo: window.leftAnchor),
+                    statusBar.rightAnchor.constraint(equalTo: window.rightAnchor)
+                ])
+            }
+        } else {
+            let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
+            statusBar?.backgroundColor = .yellow
         }
     }
     
@@ -72,8 +98,7 @@ class ProductDetailViewController: UIViewController {
     
     private func removeViewLoading() {
         self.loadingView.isHidden = true
-        self.shimmerView?.isShimmering = false
-        self.shimmerView?.removeFromSuperview()
+        self.loadingView.stopShimmering()
     }
     
     private func bindStateView() {
@@ -98,7 +123,7 @@ class ProductDetailViewController: UIViewController {
 }
 extension UINavigationItem {
 
-    override open func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         let backItem = UIBarButtonItem()
         backItem.title = "Voltar"

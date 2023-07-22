@@ -11,7 +11,7 @@ import Foundation
 class ProductDetailRequest: RequestProtocol {
     
     // MARK: - Properties
-    var urlPath: String =  "/items/"
+    var urlPath: String = "/items/"
     var productId: String
     
     // MARK: - Initializers
@@ -21,6 +21,8 @@ class ProductDetailRequest: RequestProtocol {
     
     // MARK: - Public Methods
     func getFullEndpoitPath() -> String {
-        return "\(ApiConfiguration.shared.baseUrlEndpoint)\(self.urlPath)\(self.productId)"
+        
+        let fullEndpoint = "\(ApiConfiguration.shared.baseUrlEndpoint)\(self.urlPath)\(self.productId)"
+        return fullEndpoint
     }
 }

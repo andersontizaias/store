@@ -11,7 +11,7 @@ import Foundation
 class SearchRequest: RequestProtocol {
 
     // MARK: - Properties
-    var urlPath: String =  "/sites/MLU/search?q=$SENTENCE&offset=$OFFSET"
+    var urlPath: String = "/sites/MLU/search?q=$SENTENCE&offset=$OFFSET"
     var sentence: String
     var offset: Int
     

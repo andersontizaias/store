@@ -21,12 +21,14 @@ class ProductDescriptionRequest: RequestProtocol {
     
     // MARK: - Public Methods
     func getFullEndpoitPath() -> String {
-        return "\(ApiConfiguration.shared.baseUrlEndpoint)\(self.setUrlEndpoint())"
+        let fullEndpoint = "\(ApiConfiguration.shared.baseUrlEndpoint)\(self.setUrlEndpoint())"
+        return fullEndpoint
     }
     
     // MARK: - Private Methods
     private func setUrlEndpoint() -> String {
-       return  self.urlPath.replacingOccurrences(of: "$PRODUCTID", with: self.productId)
+        let urlEndpoint = self.urlPath.replacingOccurrences(of: "$PRODUCTID", with: self.productId)
+        return urlEndpoint
     }
 
 }

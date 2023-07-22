@@ -1,28 +1,24 @@
 PODS:
-  - Alamofire (4.8.1)
-  - Kingfisher (5.1.0)
-  - Shimmer (1.0.2)
-  - SwiftLint (0.30.1)
+  - Alamofire (5.7.1)
+  - Kingfisher (7.8.1)
+  - SwiftLint (0.52.4)
 
 DEPENDENCIES:
   - Alamofire
-  - Kingfisher (~> 5.0)
-  - Shimmer
+  - Kingfisher (= 7.8.1)
   - SwiftLint
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Alamofire
     - Kingfisher
-    - Shimmer
     - SwiftLint
 
 SPEC CHECKSUMS:
-  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
-  Kingfisher: fcec238063d17404fca89bf0a850583211c4cbf6
-  Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
-  SwiftLint: a54bf1fe12b55c68560eb2a7689dfc81458508f7
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
+  Kingfisher: 63f677311d36a3473f6b978584f8a3845d023dc5
+  SwiftLint: 1cc5cd61ba9bacb2194e340aeb47a2a37fda00b3
 
-PODFILE CHECKSUM: d5a082fd03105b6b59c9015f1d72db935e318040
+PODFILE CHECKSUM: 371e9594c822e4d22f7f4c53194c91e4e041033a
 
-COCOAPODS: 1.6.0
+COCOAPODS: 1.12.1

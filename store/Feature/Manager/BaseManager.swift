@@ -53,7 +53,7 @@ class BaseManager: NSObject {
 //    }
     
     func resetResources() {
-        //cancelRequests()
+        // cancelRequests()
         requests.removeAll()
         factories.removeAll()
     }

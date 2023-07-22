@@ -6,6 +6,6 @@
 //  Copyright © 2019 Anderson Tiago Izaias. All rights reserved.
 //
 
-#import <Shimmer/FBShimmering.h>
-#import "FBShimmeringLayer.h"
-#import "FBShimmeringView.h"
+//#import <Shimmer/FBShimmering.h>
+//#import "FBShimmeringLayer.h"
+//#import "FBShimmeringView.h"

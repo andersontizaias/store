@@ -12,6 +12,6 @@ protocol ServicesProtocol {
     
     // MARK: - Public Methods
     func fetch<T: Decodable> (completion: @escaping (T?, _ error: Error?) -> Void) throws
-    //func fetch<T: Decodable> (completion: @escaping (T) -> Void, error: Error?)
+    // func fetch<T: Decodable> (completion: @escaping (T) -> Void, error: Error?)
     
 }

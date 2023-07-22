@@ -43,12 +43,18 @@ import CoreGraphics
 import ImageIO
 
 private var animatedImageDataKey: Void?
+private var imageFrameCountKey: Void?
 
 // MARK: - Image Properties
-extension KingfisherWrapper where Base: Image {
+extension KingfisherWrapper where Base: KFCrossPlatformImage {
     private(set) var animatedImageData: Data? {
         get { return getAssociatedObject(base, &animatedImageDataKey) }
         set { setRetainedAssociatedObject(base, &animatedImageDataKey, newValue) }
+    }
+    
+    public var imageFrameCount: Int? {
+        get { return getAssociatedObject(base, &imageFrameCountKey) }
+        set { setRetainedAssociatedObject(base, &imageFrameCountKey, newValue) }
     }
     
     #if os(macOS)
@@ -60,7 +66,7 @@ extension KingfisherWrapper where Base: Image {
         return 1.0
     }
     
-    private(set) var images: [Image]? {
+    private(set) var images: [KFCrossPlatformImage]? {
         get { return getAssociatedObject(base, &imagesKey) }
         set { setRetainedAssociatedObject(base, &imagesKey, newValue) }
     }
@@ -80,11 +86,20 @@ extension KingfisherWrapper where Base: Image {
     #else
     var cgImage: CGImage? { return base.cgImage }
     var scale: CGFloat { return base.scale }
-    var images: [Image]? { return base.images }
+    var images: [KFCrossPlatformImage]? { return base.images }
     var duration: TimeInterval { return base.duration }
     var size: CGSize { return base.size }
     
-    private(set) var imageSource: CGImageSource? {
+    /// The image source reference of current image.
+    public var imageSource: CGImageSource? {
+        get {
+            guard let frameSource = frameSource as? CGImageFrameSource else { return nil }
+            return frameSource.imageSource
+        }
+    }
+    
+    /// The custom frame source of current image.
+    public private(set) var frameSource: ImageFrameSource? {
         get { return getAssociatedObject(base, &imageSourceKey) }
         set { setRetainedAssociatedObject(base, &imageSourceKey, newValue) }
     }
@@ -96,44 +111,98 @@ extension KingfisherWrapper where Base: Image {
         guard let cgImage = cgImage else {
             return pixel * 4
         }
-        return pixel * cgImage.bitsPerPixel / 8
+        let bytesPerPixel = cgImage.bitsPerPixel / 8
+        guard let imageCount = images?.count else {
+            return pixel * bytesPerPixel
+        }
+        return pixel * bytesPerPixel * imageCount
     }
 }
 
 // MARK: - Image Conversion
-extension KingfisherWrapper where Base: Image {
+extension KingfisherWrapper where Base: KFCrossPlatformImage {
     #if os(macOS)
-    static func image(cgImage: CGImage, scale: CGFloat, refImage: Image?) -> Image {
-        return Image(cgImage: cgImage, size: .zero)
+    static func image(cgImage: CGImage, scale: CGFloat, refImage: KFCrossPlatformImage?) -> KFCrossPlatformImage {
+        return KFCrossPlatformImage(cgImage: cgImage, size: .zero)
     }
     
     /// Normalize the image. This getter does nothing on macOS but return the image itself.
-    public var normalized: Image { return base }
+    public var normalized: KFCrossPlatformImage { return base }
 
     #else
     /// Creating an image from a give `CGImage` at scale and orientation for refImage. The method signature is for
     /// compatibility of macOS version.
-    static func image(cgImage: CGImage, scale: CGFloat, refImage: Image?) -> Image {
-        return Image(cgImage: cgImage, scale: scale, orientation: refImage?.imageOrientation ?? .up)
+    static func image(cgImage: CGImage, scale: CGFloat, refImage: KFCrossPlatformImage?) -> KFCrossPlatformImage {
+        return KFCrossPlatformImage(cgImage: cgImage, scale: scale, orientation: refImage?.imageOrientation ?? .up)
     }
     
     /// Returns normalized image for current `base` image.
     /// This method will try to redraw an image with orientation and scale considered.
-    public var normalized: Image {
+    public var normalized: KFCrossPlatformImage {
         // prevent animated image (GIF) lose it's images
-        guard images == nil else { return base }
+        guard images == nil else { return base.copy() as! KFCrossPlatformImage }
         // No need to do anything if already up
-        guard base.imageOrientation != .up else { return base }
-    
-        return draw(to: size) { _ in
-            base.draw(in: CGRect(origin: .zero, size: size))
+        guard base.imageOrientation != .up else { return base.copy() as! KFCrossPlatformImage }
+
+        return draw(to: size, inverting: true, refImage: KFCrossPlatformImage()) {
+            fixOrientation(in: $0)
+            return true
+        }
+    }
+
+    func fixOrientation(in context: CGContext) {
+
+        var transform = CGAffineTransform.identity
+
+        let orientation = base.imageOrientation
+
+        switch orientation {
+        case .down, .downMirrored:
+            transform = transform.translatedBy(x: size.width, y: size.height)
+            transform = transform.rotated(by: .pi)
+        case .left, .leftMirrored:
+            transform = transform.translatedBy(x: size.width, y: 0)
+            transform = transform.rotated(by: .pi / 2.0)
+        case .right, .rightMirrored:
+            transform = transform.translatedBy(x: 0, y: size.height)
+            transform = transform.rotated(by: .pi / -2.0)
+        case .up, .upMirrored:
+            break
+        #if compiler(>=5)
+        @unknown default:
+            break
+        #endif
+        }
+
+        //Flip image one more time if needed to, this is to prevent flipped image
+        switch orientation {
+        case .upMirrored, .downMirrored:
+            transform = transform.translatedBy(x: size.width, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+        case .leftMirrored, .rightMirrored:
+            transform = transform.translatedBy(x: size.height, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+        case .up, .down, .left, .right:
+            break
+        #if compiler(>=5)
+        @unknown default:
+            break
+        #endif
+        }
+
+        context.concatenate(transform)
+        switch orientation {
+        case .left, .leftMirrored, .right, .rightMirrored:
+            context.draw(cgImage!, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
+        default:
+            context.draw(cgImage!, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         }
     }
     #endif
 }
 
 // MARK: - Image Representation
-extension KingfisherWrapper where Base: Image {
+extension KingfisherWrapper where Base: KFCrossPlatformImage {
     /// Returns PNG representation of `base` image.
     ///
     /// - Returns: PNG data of image.
@@ -145,11 +214,7 @@ extension KingfisherWrapper where Base: Image {
             let rep = NSBitmapImageRep(cgImage: cgImage)
             return rep.representation(using: .png, properties: [:])
         #else
-            #if swift(>=4.2)
             return base.pngData()
-            #else
-            return UIImagePNGRepresentation(base)
-            #endif
         #endif
     }
 
@@ -165,11 +230,7 @@ extension KingfisherWrapper where Base: Image {
             let rep = NSBitmapImageRep(cgImage: cgImage)
             return rep.representation(using:.jpeg, properties: [.compressionFactor: compressionQuality])
         #else
-            #if swift(>=4.2)
             return base.jpegData(compressionQuality: compressionQuality)
-            #else
-            return UIImageJPEGRepresentation(base, compressionQuality)
-            #endif
         #endif
     }
 
@@ -179,10 +240,31 @@ extension KingfisherWrapper where Base: Image {
     public func gifRepresentation() -> Data? {
         return animatedImageData
     }
+
+    /// Returns a data representation for `base` image, with the `format` as the format indicator.
+    /// - Parameters:
+    ///   - format: The format in which the output data should be. If `unknown`, the `base` image will be
+    ///             converted in the PNG representation.
+    ///   - compressionQuality: The compression quality when converting image to a lossy format data.
+    ///
+    /// - Returns: The output data representing.
+    public func data(format: ImageFormat, compressionQuality: CGFloat = 1.0) -> Data? {
+        return autoreleasepool { () -> Data? in
+            let data: Data?
+            switch format {
+            case .PNG: data = pngRepresentation()
+            case .JPEG: data = jpegRepresentation(compressionQuality: compressionQuality)
+            case .GIF: data = gifRepresentation()
+            case .unknown: data = normalized.kf.pngRepresentation()
+            }
+            
+            return data
+        }
+    }
 }
 
 // MARK: - Creating Images
-extension KingfisherWrapper where Base: Image {
+extension KingfisherWrapper where Base: KFCrossPlatformImage {
 
     /// Creates an animated image from a given data and options. Currently only GIF data is supported.
     ///
@@ -191,7 +273,7 @@ extension KingfisherWrapper where Base: Image {
     ///   - options: Options to use when creating the animated image.
     /// - Returns: An `Image` object represents the animated image. It is in form of an array of image frames with a
     ///            certain duration. `nil` if anything wrong when creating animated image.
-    public static func animatedImage(data: Data, options: ImageCreatingOptions) -> Image? {
+    public static func animatedImage(data: Data, options: ImageCreatingOptions) -> KFCrossPlatformImage? {
         let info: [String: Any] = [
             kCGImageSourceShouldCache as String: true,
             kCGImageSourceTypeIdentifierHint as String: kUTTypeGIF
@@ -200,28 +282,51 @@ extension KingfisherWrapper where Base: Image {
         guard let imageSource = CGImageSourceCreateWithData(data as CFData, info as CFDictionary) else {
             return nil
         }
-        
+        let frameSource = CGImageFrameSource(data: data, imageSource: imageSource, options: info)
         #if os(macOS)
-        guard let animatedImage = GIFAnimatedImage(from: imageSource, for: info, options: options) else {
+        let baseImage = KFCrossPlatformImage(data: data)
+        #else
+        let baseImage = KFCrossPlatformImage(data: data, scale: options.scale)
+        #endif
+        return animatedImage(source: frameSource, options: options, baseImage: baseImage)
+    }
+    
+    /// Creates an animated image from a given frame source.
+    ///
+    /// - Parameters:
+    ///   - source: The frame source to create animated image from.
+    ///   - options: Options to use when creating the animated image.
+    ///   - baseImage: An optional image object to be used as the key frame of the animated image. If `nil`, the first
+    ///                frame of the `source` will be used.
+    /// - Returns: An `Image` object represents the animated image. It is in form of an array of image frames with a
+    ///           certain duration. `nil` if anything wrong when creating animated image.
+    public static func animatedImage(source: ImageFrameSource, options: ImageCreatingOptions, baseImage: KFCrossPlatformImage? = nil) -> KFCrossPlatformImage? {
+        #if os(macOS)
+        guard let animatedImage = GIFAnimatedImage(from: source, options: options) else {
             return nil
         }
-        let image: Image?
+        var image: KFCrossPlatformImage?
         if options.onlyFirstFrame {
             image = animatedImage.images.first
         } else {
-            image = Image(data: data)
+            if let baseImage = baseImage {
+                image = baseImage
+            } else {
+                image = animatedImage.images.first
+            }
             var kf = image?.kf
             kf?.images = animatedImage.images
             kf?.duration = animatedImage.duration
         }
-        image?.kf.animatedImageData = data
+        image?.kf.animatedImageData = source.data
+        image?.kf.imageFrameCount = source.frameCount
         return image
         #else
         
-        let image: Image?
+        var image: KFCrossPlatformImage?
         if options.preloadAll || options.onlyFirstFrame {
             // Use `images` image if you want to preload all animated data
-            guard let animatedImage = GIFAnimatedImage(from: imageSource, for: info, options: options) else {
+            guard let animatedImage = GIFAnimatedImage(from: source, options: options) else {
                 return nil
             }
             if options.onlyFirstFrame {
@@ -230,14 +335,22 @@ extension KingfisherWrapper where Base: Image {
                 let duration = options.duration <= 0.0 ? animatedImage.duration : options.duration
                 image = .animatedImage(with: animatedImage.images, duration: duration)
             }
-            image?.kf.animatedImageData = data
+            image?.kf.animatedImageData = source.data
         } else {
-            image = Image(data: data, scale: options.scale)
+            if let baseImage = baseImage {
+                image = baseImage
+            } else {
+                guard let firstFrame = source.frame(at: 0) else {
+                    return nil
+                }
+                image = KFCrossPlatformImage(cgImage: firstFrame, scale: options.scale, orientation: .up)
+            }
             var kf = image?.kf
-            kf?.imageSource = imageSource
-            kf?.animatedImageData = data
+            kf?.frameSource = source
+            kf?.animatedImageData = source.data
         }
         
+        image?.kf.imageFrameCount = source.frameCount
         return image
         #endif
     }
@@ -251,17 +364,17 @@ extension KingfisherWrapper where Base: Image {
     ///   - options: Options to use when creating the image.
     /// - Returns: An `Image` object represents the image if created. If the `data` is invalid or not supported, `nil`
     ///            will be returned.
-    public static func image(data: Data, options: ImageCreatingOptions) -> Image? {
-        var image: Image?
+    public static func image(data: Data, options: ImageCreatingOptions) -> KFCrossPlatformImage? {
+        var image: KFCrossPlatformImage?
         switch data.kf.imageFormat {
         case .JPEG:
-            image = Image(data: data, scale: options.scale)
+            image = KFCrossPlatformImage(data: data, scale: options.scale)
         case .PNG:
-            image = Image(data: data, scale: options.scale)
+            image = KFCrossPlatformImage(data: data, scale: options.scale)
         case .GIF:
             image = KingfisherWrapper.animatedImage(data: data, options: options)
         case .unknown:
-            image = Image(data: data, scale: options.scale)
+            image = KFCrossPlatformImage(data: data, scale: options.scale)
         }
         return image
     }
@@ -279,21 +392,22 @@ extension KingfisherWrapper where Base: Image {
     /// input image in pixel format. It does downsampling from the image data, so it is much
     /// more memory efficient and friendly. Choose to use downsampling as possible as you can.
     ///
-    /// The input size should be smaller than the size of input image. If it is larger than the
+    /// The pointsize should be smaller than the size of input image. If it is larger than the
     /// original image size, the result image will be the same size of input without downsampling.
-    public static func downsampledImage(data: Data, to pointSize: CGSize, scale: CGFloat) -> Image? {
+    public static func downsampledImage(data: Data, to pointSize: CGSize, scale: CGFloat) -> KFCrossPlatformImage? {
         let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
         guard let imageSource = CGImageSourceCreateWithData(data as CFData, imageSourceOptions) else {
             return nil
         }
         
         let maxDimensionInPixels = max(pointSize.width, pointSize.height) * scale
-        let downsampleOptions = [
+        let downsampleOptions: [CFString : Any] = [
             kCGImageSourceCreateThumbnailFromImageAlways: true,
             kCGImageSourceShouldCacheImmediately: true,
             kCGImageSourceCreateThumbnailWithTransform: true,
-            kCGImageSourceThumbnailMaxPixelSize: maxDimensionInPixels] as CFDictionary
-        guard let downsampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downsampleOptions) else {
+            kCGImageSourceThumbnailMaxPixelSize: maxDimensionInPixels
+        ]
+        guard let downsampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downsampleOptions as CFDictionary) else {
             return nil
         }
         return KingfisherWrapper.image(cgImage: downsampledImage, scale: scale, refImage: nil)

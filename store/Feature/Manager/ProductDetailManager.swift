@@ -53,7 +53,7 @@ class ProductDetailManager: BaseManager, ProductDetailManagerProtocol {
     // MARK: - Private Methods
     private func fetchDetails(request: ProductDetailRequest) -> RequestProtocol {
         
-        return self.businessProductDetail.fetchDetails(by: request.productId) { [weak self] (result: ProductItem?, error: Error? ) in
+        let result = self.businessProductDetail.fetchDetails(by: request.productId) { [weak self] (result: ProductItem?, error: Error? ) in
             guard let weakSelf = self else { return }
             
             if let result = result {
@@ -66,11 +66,13 @@ class ProductDetailManager: BaseManager, ProductDetailManagerProtocol {
             
             weakSelf.requestCompleted()
         }
+        
+        return result
     }
     
     private func fetchDescription(request: ProductDescriptionRequest) -> RequestProtocol {
         
-        return self.businessProductDescription.fetchProductDecription(by: request.productId) { [weak self] (result: ProductDescription?, error: Error? ) in
+        let result = self.businessProductDescription.fetchProductDecription(by: request.productId) { [weak self] (result: ProductDescription?, error: Error? ) in
             guard let weakSelf = self else { return }
             
             if let result = result {
@@ -83,6 +85,8 @@ class ProductDetailManager: BaseManager, ProductDetailManagerProtocol {
             
             weakSelf.requestCompleted()
         }
+        
+        return result
     }
     
 }

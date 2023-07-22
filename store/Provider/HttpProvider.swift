@@ -9,7 +9,7 @@
 import Alamofire
 
 class HttpProvider: HttpProviderProtocol {
-    
+
     // MARK: - Properties
     var request: RequestProtocol
     
@@ -19,29 +19,18 @@ class HttpProvider: HttpProviderProtocol {
     }
     
     // MARK: - Public Methods
-    func get(completion: @escaping ResponseCompletion, completionError: @escaping ResponseCompletionError) {
-        
-        Alamofire.request(self.request.getFullEndpoitPath())
-            .responseJSON { response in
-                guard response.result.error == nil else {
-                    // got an error in getting the data, need to handle it
+    func get<T>(completion: @escaping (T) -> Void, completionError: @escaping ResponseCompletionError) where T: Decodable {
+        AF.request(self.request.getFullEndpoitPath())
+            .validate()
+            .responseDecodable(of: T.self) { response in
+                switch response.result {
+                case .success(let todo):
+                    completion(todo)
+                case .failure:
                     print("error calling GET on /todos/1")
-                    print(response.result.error!)
                     completionError(AppError.httpError)
-                    return
                 }
-                
-                // make sure we got some JSON since that's what we expect
-                guard let json = response.result.value as? [String: Any] else {
-                    print("didn't get todo object as JSON from API")
-                    if let error = response.result.error {
-                        print("Error: \(error)")
-                        completionError(AppError.parserError)
-                    }
-                    return
-                }
-                
-                completion(json)
             }
     }
+    
 }

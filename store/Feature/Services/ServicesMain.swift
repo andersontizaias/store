@@ -22,25 +22,12 @@ class ServiceMain: ServicesProtocol {
     
     // MARK: - Public Methods
     func fetch<T: Decodable> (completion: @escaping(T?, _ error: Error?) -> Void) {
-        
-        self.provider.get( completion: { result  in
-                
-                if let jsonData = try? JSONSerialization.data(withJSONObject: result, options: []) {
-                    let decoder = JSONDecoder()
-                    
-                    do {
-                        let search = try decoder.decode(T.self, from: jsonData)
-                        completion(search, nil)
-                    } catch {
-                        completion(nil, AppError.parserError)
-                        
-                    }
-                }
-            },
+        self.provider.get( completion: { (value: T) in
+            completion(value, nil)
+        },
             completionError: { error in
-               completion(nil, error)
-            })
-        
+            completion(nil, error)
+        })        
     }
 
 }

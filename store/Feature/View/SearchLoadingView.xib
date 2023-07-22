@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -103,6 +101,11 @@
                         <constraint firstAttribute="bottom" secondItem="g6b-zB-l7r" secondAttribute="bottom" constant="10" id="h6q-7I-arC"/>
                         <constraint firstItem="PYu-eZ-7Ab" firstAttribute="leading" secondItem="moK-o1-Su8" secondAttribute="trailing" constant="17" id="iQj-rH-Jut"/>
                     </constraints>
+                    <connections>
+                        <outlet property="imageShimmer" destination="moK-o1-Su8" id="qsO-2Z-b0P"/>
+                        <outlet property="priceShimmer" destination="g6b-zB-l7r" id="pRU-QT-C40"/>
+                        <outlet property="titleShimmer" destination="PYu-eZ-7Ab" id="EKZ-Wd-4cY"/>
+                    </connections>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ino-U1-hFS" customClass="SearchLoadingView" customModule="store" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="181" width="375" height="81"/>
@@ -142,6 +145,11 @@
                         <constraint firstItem="9xw-lG-soy" firstAttribute="leading" secondItem="lcr-8Z-hQB" secondAttribute="trailing" constant="17" id="kAL-Zx-TOL"/>
                         <constraint firstAttribute="height" constant="81" id="tBg-9r-PSv"/>
                     </constraints>
+                    <connections>
+                        <outlet property="imageShimmer" destination="lcr-8Z-hQB" id="590-Dr-A4W"/>
+                        <outlet property="priceShimmer" destination="N72-Lm-oIX" id="Xic-zs-4KF"/>
+                        <outlet property="titleShimmer" destination="9xw-lG-soy" id="zBe-UH-dri"/>
+                    </connections>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g8k-US-Nyf" customClass="SearchLoadingView" customModule="store" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="262" width="375" height="81"/>
@@ -181,6 +189,11 @@
                         <constraint firstItem="LF8-oU-Fl2" firstAttribute="top" secondItem="g8k-US-Nyf" secondAttribute="top" constant="10" id="tEk-5p-R7C"/>
                         <constraint firstItem="LF8-oU-Fl2" firstAttribute="leading" secondItem="xuC-yr-CnT" secondAttribute="trailing" constant="17" id="tTs-ab-wLA"/>
                     </constraints>
+                    <connections>
+                        <outlet property="imageShimmer" destination="xuC-yr-CnT" id="zet-vM-VCb"/>
+                        <outlet property="priceShimmer" destination="pE8-uX-aQl" id="YgH-3O-UzV"/>
+                        <outlet property="titleShimmer" destination="LF8-oU-Fl2" id="8v4-rf-tmK"/>
+                    </connections>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j5j-ic-FB9" customClass="SearchLoadingView" customModule="store" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="343" width="375" height="81"/>
@@ -220,6 +233,11 @@
                         <constraint firstItem="dZs-8Q-1OK" firstAttribute="top" secondItem="ag3-xY-SG0" secondAttribute="bottom" constant="20" id="uI5-Xk-qMq"/>
                         <constraint firstItem="ag3-xY-SG0" firstAttribute="top" secondItem="j5j-ic-FB9" secondAttribute="top" constant="10" id="xjY-Ms-tvB"/>
                     </constraints>
+                    <connections>
+                        <outlet property="imageShimmer" destination="hiW-XO-DOn" id="joL-eg-oYf"/>
+                        <outlet property="priceShimmer" destination="dZs-8Q-1OK" id="Wx5-94-oYz"/>
+                        <outlet property="titleShimmer" destination="ag3-xY-SG0" id="EDb-Wd-PIS"/>
+                    </connections>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZYB-Ep-ZZc" customClass="SearchLoadingView" customModule="store" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="424" width="375" height="81"/>
@@ -260,6 +278,11 @@
                         <constraint firstAttribute="height" constant="81" id="lUC-Pd-vit"/>
                         <constraint firstItem="KBj-ns-OLh" firstAttribute="leading" secondItem="IAC-Ph-I89" secondAttribute="trailing" constant="17" id="zXB-Sy-YtV"/>
                     </constraints>
+                    <connections>
+                        <outlet property="imageShimmer" destination="IAC-Ph-I89" id="tqR-3U-51l"/>
+                        <outlet property="priceShimmer" destination="FH2-K2-F9F" id="dhL-vN-N2t"/>
+                        <outlet property="titleShimmer" destination="KBj-ns-OLh" id="Yyb-4q-bTv"/>
+                    </connections>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rdx-lE-bHY" customClass="SearchLoadingView" customModule="store" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="505" width="375" height="81"/>
@@ -300,6 +323,11 @@
                         <constraint firstAttribute="height" constant="81" id="xoI-eM-zfe"/>
                         <constraint firstItem="62z-fr-Zkr" firstAttribute="top" secondItem="LFK-fN-KtM" secondAttribute="bottom" constant="20" id="zRm-Fx-RaI"/>
                     </constraints>
+                    <connections>
+                        <outlet property="imageShimmer" destination="OiV-iG-u7p" id="A6q-js-2Dh"/>
+                        <outlet property="priceShimmer" destination="62z-fr-Zkr" id="e6O-Fm-i4F"/>
+                        <outlet property="titleShimmer" destination="LFK-fN-KtM" id="vC8-d1-oua"/>
+                    </connections>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Ra-dy-73o" customClass="SearchLoadingView" customModule="store" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="586" width="375" height="81"/>
@@ -340,8 +368,14 @@
                         <constraint firstAttribute="height" constant="81" id="uyS-nZ-irI"/>
                         <constraint firstAttribute="bottom" secondItem="SYq-vR-lLL" secondAttribute="bottom" constant="10" id="ymB-d1-OxK"/>
                     </constraints>
+                    <connections>
+                        <outlet property="imageShimmer" destination="vW7-38-NxF" id="4d4-6d-iQ3"/>
+                        <outlet property="priceShimmer" destination="SYq-vR-lLL" id="WwJ-Tn-v7o"/>
+                        <outlet property="titleShimmer" destination="SX3-jL-MDn" id="5zw-DR-MO1"/>
+                    </connections>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <constraints>
                 <constraint firstItem="ZYB-Ep-ZZc" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="0JY-eG-30f"/>
                 <constraint firstItem="ufd-gX-AnA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="0xb-cu-k38"/>
@@ -368,7 +402,6 @@
                 <constraint firstItem="Ino-U1-hFS" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="zdv-y0-U1e"/>
                 <constraint firstItem="2qm-V5-Hli" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="zzd-Ei-HA0"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
         </view>
     </objects>

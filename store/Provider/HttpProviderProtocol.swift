@@ -9,7 +9,6 @@
 import Foundation
 
 // MARK: - TypeAlias
-typealias ResponseCompletion = (_ result: [String: Any] ) -> Void
 typealias ResponseCompletionError = (_ error: Swift.Error) -> Void
 
 protocol HttpProviderProtocol {
@@ -18,6 +17,6 @@ protocol HttpProviderProtocol {
     var request: RequestProtocol { get set }
     
     // MARK: - Public Methods
-    func get(completion: @escaping ResponseCompletion, completionError: @escaping ResponseCompletionError)
+    func get<T: Decodable>(completion: @escaping (T) -> Void, completionError: @escaping ResponseCompletionError)
     
 }
