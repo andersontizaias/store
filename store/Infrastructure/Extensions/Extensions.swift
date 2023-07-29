@@ -47,3 +47,10 @@ extension UIView {
         self.layer.mask = nil
     }
 }
+
+extension UIColor {
+    
+    static var yellowMeli: UIColor {
+        return UIColor(red: 251.0/255.0, green:231.0/255.0, blue: 77.0/255.0, alpha: 1.0)
+    }
+}

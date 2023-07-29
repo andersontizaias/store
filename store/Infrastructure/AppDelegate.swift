@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigationController: UINavigationController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        sleep(3)
         setupViews()
         SearchFlowController.shared.start()
         return true
@@ -48,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.navigationController = UINavigationController()
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.barTintColor = UIColor.yellow
+        self.navigationController?.navigationBar.barTintColor = UIColor.yellowMeli
         self.window!.rootViewController = self.navigationController
         self.window?.makeKeyAndVisible()
         UINavigationBar.appearance().tintColor = UIColor.black

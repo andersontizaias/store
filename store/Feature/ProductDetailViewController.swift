@@ -60,7 +60,7 @@ class ProductDetailViewController: UIViewController {
     private func setupNavigationBar() {
         navigationBar = UINavigationBar(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height, width: view.frame.width, height: 44))
         
-        navigationBar.barTintColor = .yellow
+        navigationBar.barTintColor = UIColor.yellowMeli
         navigationBar.isTranslucent = false
         
         let navigationItem = UINavigationItem()
@@ -71,7 +71,7 @@ class ProductDetailViewController: UIViewController {
         
         if #available(iOS 13.0, *) {
             let statusBar = UIView()
-            statusBar.backgroundColor = .yellow
+            statusBar.backgroundColor = UIColor.yellowMeli
             if let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first {
                 window.addSubview(statusBar)
                 statusBar.translatesAutoresizingMaskIntoConstraints = false
@@ -84,7 +84,7 @@ class ProductDetailViewController: UIViewController {
             }
         } else {
             let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
-            statusBar?.backgroundColor = .yellow
+            statusBar?.backgroundColor = UIColor.yellowMeli
         }
     }
     

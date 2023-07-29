@@ -16,12 +16,15 @@ class SearchViewController: UIViewController {
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var tableResults: UITableView!
     
+    private var firstSearchItem: String? 
+    
     // MARK: - Public Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         initializeViewModel()
         bindStateView()
+        firstSearch()
         
     }
     
@@ -33,7 +36,6 @@ class SearchViewController: UIViewController {
         self.tableResults.dataSource = self
         self.tableResults.tableFooterView = UIView(frame: .zero)
         self.searchBar.backgroundImage = UIImage()
-        self.searchBar.backgroundColor = UIColor.yellow
         
     }
     
@@ -50,7 +52,6 @@ class SearchViewController: UIViewController {
     private func loading() {
         let nib = UINib(nibName: .searchloadingView, bundle: nil)
         if let loadingView = nib.instantiate(withOwner: self, options: nil).first as? UIView {
-        
              self.tableResults.backgroundView = loadingView
         }
     
@@ -81,6 +82,19 @@ class SearchViewController: UIViewController {
                 }
             }
         })
+    }
+    
+    private func firstSearch() {
+        
+        let searchListItems = ["Ferramentas","Roupas","Utilidades","Musica","Casa"]
+        
+        firstSearchItem = searchListItems.randomElement()
+        
+        if let firstSearchItem {
+            getData(productName: firstSearchItem)
+            searchBar.text = firstSearchItem
+        }
+        firstSearchItem = nil
     }
     
 }
