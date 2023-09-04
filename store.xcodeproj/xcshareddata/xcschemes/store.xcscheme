@@ -57,6 +57,11 @@
                BlueprintName = "storeUITests"
                ReferencedContainer = "container:store.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "StoreUITests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

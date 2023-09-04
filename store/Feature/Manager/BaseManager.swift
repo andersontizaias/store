@@ -66,4 +66,5 @@ class BaseManager: NSObject {
 //            designatedError = error
 //        }
 //    }
+     
 }

@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		2BC050C63686187249A2A594 /* Pods_storeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC3054CEB3B1B0FA7800F99 /* Pods_storeTests.framework */; };
 		3A39383374A668C54E9C0458 /* Pods_store.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 437AEE98C96567F7CA3E54A9 /* Pods_store.framework */; };
+		7793A49B2A9297F700E207BF /* ProductListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7793A49A2A9297F700E207BF /* ProductListViewModel.swift */; };
+		7793A49D2A929DEE00E207BF /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7793A49C2A929DEE00E207BF /* ProductListView.swift */; };
+		7793A49F2A929EC000E207BF /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7793A49E2A929EC000E207BF /* SearchBar.swift */; };
+		7793A4A12A9A4C3D00E207BF /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7793A4A02A9A4C3D00E207BF /* AsyncImage.swift */; };
+		7793A4A32A9AB8F600E207BF /* ShimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7793A4A22A9AB8F600E207BF /* ShimerView.swift */; };
+		7793A4A52A9F91B000E207BF /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7793A4A42A9F91B000E207BF /* ProductDetailView.swift */; };
+		7793A4A72A9FF3B200E207BF /* ProductDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7793A4A62A9FF3B200E207BF /* ProductDetailsViewModel.swift */; };
 		C24B6808220F107C00EE2038 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24B6807220F107C00EE2038 /* Alamofire.framework */; };
 		C2565EB02210F5CF00ECB427 /* FlowConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2565EAF2210F5CF00ECB427 /* FlowConfig.swift */; };
 		C2565EB22210F5E600ECB427 /* FlowControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2565EB12210F5E600ECB427 /* FlowControllable.swift */; };
@@ -88,6 +95,13 @@
 		52FC50CDBA7896AE08A58EC5 /* Pods-storeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-storeTests.debug.xcconfig"; path = "Target Support Files/Pods-storeTests/Pods-storeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		57203E1E70385FB2DE63C594 /* Pods-storeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-storeTests.release.xcconfig"; path = "Target Support Files/Pods-storeTests/Pods-storeTests.release.xcconfig"; sourceTree = "<group>"; };
 		76DB2A1A1AAD72342587811E /* Pods-store.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-store.debug.xcconfig"; path = "Target Support Files/Pods-store/Pods-store.debug.xcconfig"; sourceTree = "<group>"; };
+		7793A49A2A9297F700E207BF /* ProductListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewModel.swift; sourceTree = "<group>"; };
+		7793A49C2A929DEE00E207BF /* ProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListView.swift; sourceTree = "<group>"; };
+		7793A49E2A929EC000E207BF /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		7793A4A02A9A4C3D00E207BF /* AsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
+		7793A4A22A9AB8F600E207BF /* ShimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimerView.swift; sourceTree = "<group>"; };
+		7793A4A42A9F91B000E207BF /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
+		7793A4A62A9FF3B200E207BF /* ProductDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewModel.swift; sourceTree = "<group>"; };
 		77B47C7E045AA90544B83CBF /* Pods-storeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-storeUITests.debug.xcconfig"; path = "Target Support Files/Pods-storeUITests/Pods-storeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9570A668322E39FA12AC2DA1 /* Pods-store.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-store.release.xcconfig"; path = "Target Support Files/Pods-store/Pods-store.release.xcconfig"; sourceTree = "<group>"; };
 		B08B5B37FF7ED098E5E81A9B /* Pods_storeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_storeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -199,6 +213,8 @@
 				C2DDE5F12210A1CF008F1757 /* SearchViewModelProtocol.swift */,
 				C2565EC62212442200ECB427 /* ProductDetailViewModel.swift */,
 				C2565EC42212431C00ECB427 /* ProductDetailViewModelProtocol.swift */,
+				7793A49A2A9297F700E207BF /* ProductListViewModel.swift */,
+				7793A4A62A9FF3B200E207BF /* ProductDetailsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -213,6 +229,11 @@
 				C2565EDD2216F4DD00ECB427 /* SearchLoadingView.swift */,
 				C2565EE8221A3E6A00ECB427 /* SearchErrorView.xib */,
 				C2565EEA221A42A500ECB427 /* SearchErrorView.swift */,
+				7793A49C2A929DEE00E207BF /* ProductListView.swift */,
+				7793A49E2A929EC000E207BF /* SearchBar.swift */,
+				7793A4A02A9A4C3D00E207BF /* AsyncImage.swift */,
+				7793A4A22A9AB8F600E207BF /* ShimerView.swift */,
+				7793A4A42A9F91B000E207BF /* ProductDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -671,10 +692,12 @@
 			files = (
 				C29053E3220F09A900D7BA02 /* HttpProvider.swift in Sources */,
 				C2DDE5EA22109811008F1757 /* SearchBusiness.swift in Sources */,
+				7793A4A32A9AB8F600E207BF /* ShimerView.swift in Sources */,
 				C2565EBC2211881100ECB427 /* ProductItem.swift in Sources */,
 				C2565EC72212442200ECB427 /* ProductDetailViewModel.swift in Sources */,
 				C2565EB72211125A00ECB427 /* ProductDetailViewController.swift in Sources */,
 				C2565EC92212DD8600ECB427 /* ProductDescriptionRequest.swift in Sources */,
+				7793A49B2A9297F700E207BF /* ProductListViewModel.swift in Sources */,
 				C2E47683220EFB3A009695E8 /* SearchViewController.swift in Sources */,
 				C2565EE5221998E500ECB427 /* Extensions.swift in Sources */,
 				C2565EB52210F6BA00ECB427 /* SearchFlowController.swift in Sources */,
@@ -684,12 +707,14 @@
 				C2565ED42212FA1F00ECB427 /* ProductDetailManagerProtocol.swift in Sources */,
 				C2565EC322123FFF00ECB427 /* ProductDetailBusiness.swift in Sources */,
 				C2DDE5E42210735F008F1757 /* ApiConfiguration.swift in Sources */,
+				7793A4A12A9A4C3D00E207BF /* AsyncImage.swift in Sources */,
 				C2565EC52212431C00ECB427 /* ProductDetailViewModelProtocol.swift in Sources */,
 				C2565EB22210F5E600ECB427 /* FlowControllable.swift in Sources */,
 				C2565EE72219B94B00ECB427 /* AppError.swift in Sources */,
 				C2DDE5E622107802008F1757 /* SearchRequest.swift in Sources */,
 				C2565EEB221A42A500ECB427 /* SearchErrorView.swift in Sources */,
 				C2565EBE2212306900ECB427 /* ProductDetailRequest.swift in Sources */,
+				7793A4A72A9FF3B200E207BF /* ProductDetailsViewModel.swift in Sources */,
 				C2E47681220EFB3A009695E8 /* AppDelegate.swift in Sources */,
 				C2565EBA2211168800ECB427 /* ProductDetailFlowController.swift in Sources */,
 				C2DDE5F02210A08E008F1757 /* Dynamic.swift in Sources */,
@@ -698,14 +723,17 @@
 				C2DDE5EE22109B17008F1757 /* SearchViewModel.swift in Sources */,
 				C2565ECD2212E79000ECB427 /* ProductDescriptionBusinessProtocol.swift in Sources */,
 				C29053E1220F065000D7BA02 /* HttpProviderProtocol.swift in Sources */,
+				7793A49D2A929DEE00E207BF /* ProductListView.swift in Sources */,
 				C2565ED22212F87C00ECB427 /* BaseManager.swift in Sources */,
 				C2565ECF2212EB2A00ECB427 /* ProductDescriptionBusiness.swift in Sources */,
 				C2565ED8221307D100ECB427 /* ProductDetailManager.swift in Sources */,
 				C2DDE5E2221072ED008F1757 /* ApiConfigurationProtocol.swift in Sources */,
 				C2DDE5F22210A1CF008F1757 /* SearchViewModelProtocol.swift in Sources */,
 				C2DDE5E822107A50008F1757 /* ServicesProtocol.swift in Sources */,
+				7793A4A52A9F91B000E207BF /* ProductDetailView.swift in Sources */,
 				C2565ECB2212E24600ECB427 /* ProductDescription.swift in Sources */,
 				C2DDE5F52210D52A008F1757 /* ProductShortDescriptionTableViewCell.swift in Sources */,
+				7793A49F2A929EC000E207BF /* SearchBar.swift in Sources */,
 				C29053DF220F059C00D7BA02 /* ServicesMain.swift in Sources */,
 				C2DDE5E022106E72008F1757 /* RequestProtocol.swift in Sources */,
 				C2565EDE2216F4DD00ECB427 /* SearchLoadingView.swift in Sources */,
@@ -890,10 +918,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = JH3FZNBZ64;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/store/Infrastructure/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -913,10 +941,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = JH3FZNBZ64;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/store/Infrastructure/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

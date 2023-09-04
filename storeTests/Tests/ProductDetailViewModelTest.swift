@@ -43,5 +43,17 @@ class ProductDetailViewModelTest: XCTestCase {
         XCTAssertTrue(self.productDetailViewModel?.productDetailViewState.value == .errorState)
         
     }
+    
+    func testGetDetailsEmpty() {
+        
+        self.productDetailViewModel?.getDetails(by: "MLU459925733")
+        
+        XCTAssertNotNil(self.productDetailViewModel?.productDetails)
+        XCTAssertNotNil(self.productDetailViewModel?.productDetails?.productItem)
+        XCTAssertNotNil(self.productDetailViewModel?.productDetails?.productDescription)
+        XCTAssertTrue(self.productDetailViewModel?.productDetailViewState.value == .loaded)
+        
+    }
+    
 
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         sleep(3)
-        setupViews()
-        SearchFlowController.shared.start()
+        setupViewsSwiftUI()
+        //SearchFlowController.shared.start()
         return true
     }
 
@@ -54,5 +55,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
         UINavigationBar.appearance().tintColor = UIColor.black
         
+    }
+    
+    private func setupViewsSwiftUI() {
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        self.window = window
+                
+        let contentView = ProductListView()
+        window.rootViewController = UIHostingController(rootView: contentView)
+        window.makeKeyAndVisible()
     }
 }
