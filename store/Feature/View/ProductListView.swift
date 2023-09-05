@@ -19,7 +19,6 @@ struct ProductListView: View {
         }
     }
     @State private var selectedProductIndex: Int?
-    @State private var firstSearch = true
     
     init(viewModel: ProductListViewModel = ProductListViewModel(business: SearchBusiness())) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -37,10 +36,8 @@ struct ProductListView: View {
                         }
                     })
                     .onAppear {
-                        
-                        if firstSearch {
-                            searchText = viewModel.firstSearch()
-                            firstSearch = false
+                        if searchText.isEmpty {
+                           searchText = viewModel.firstSearch()
                         }
                         viewModel.fetchProducts(query: searchText)
                     }
@@ -99,7 +96,6 @@ struct ProductListView: View {
 
 struct ProductListView_Previews: PreviewProvider {
     static var previews: some View {
-        
         let viewModel = ProductListViewModel(business: SearchBusiness())
         ProductListView(viewModel: viewModel)
     }

@@ -24,6 +24,8 @@ class ProductListViewModel: ObservableObject {
     var business: SearchBusinessProtocol
     var offset: Int = 0
     var totalPages: Int = 0
+    private var isFirstSearch = true
+    private var searchItem: String = ""
     
     init(business: SearchBusinessProtocol ) {
         self.business = business
@@ -59,8 +61,16 @@ class ProductListViewModel: ObservableObject {
     }
     
     func firstSearch()-> String {
-        let searchListItems = ["Ferramentas","Roupas","Utilidades","Musica","Casa"]
-        return searchListItems.randomElement() ?? ""
+        
+        if isFirstSearch {
+            isFirstSearch = false
+            let searchListItems = ["Ferramentas","Roupas","Utilidades","Musica","Casa"]
+            searchItem = searchListItems.randomElement() ?? ""
+            return searchItem
+        }
+        
+        return searchItem
+    
     }
     
     func clearSearchResults() {
