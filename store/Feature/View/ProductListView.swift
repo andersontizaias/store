@@ -19,6 +19,7 @@ struct ProductListView: View {
         }
     }
     @State private var selectedProductIndex: Int?
+    @State private var firstSearch = true
     
     init(viewModel: ProductListViewModel = ProductListViewModel(business: SearchBusiness())) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -36,7 +37,11 @@ struct ProductListView: View {
                         }
                     })
                     .onAppear {
-                        searchText = viewModel.firstSearch()
+                        
+                        if firstSearch {
+                            searchText = viewModel.firstSearch()
+                            firstSearch = false
+                        }
                         viewModel.fetchProducts(query: searchText)
                     }
              
